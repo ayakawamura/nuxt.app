@@ -1,6 +1,8 @@
 <script setup lang="ts">
 // import { ref, computed } from 'vue'
 import CartTable from '~/components/cart/CartTable.vue'
+import CompleteButton from '~/components/parts/CompleteButton.vue';
+
 
 useHead({
   link: [
@@ -9,12 +11,6 @@ useHead({
       href: 'https://kawamura-test.aispr.jp/css/user.css?cacheKey=1699948908'
     }
   ],
-  // script: [
-    // {
-    //   src: 'https://kawamura-test.aispr.jp/js/userAfterLoading.js',
-    //   defer: true
-    // }
-  // ],
 })
 
 import { onMounted, nextTick } from 'vue';
@@ -33,6 +29,8 @@ onMounted(async () => {
 </script>
 
 <template>
+  <HeaderComp />
+
   <div id="cart-container">
     <h1 class="cart-title">バスケット</h1>
 
@@ -67,7 +65,11 @@ onMounted(async () => {
       合計: <strong>1000円</strong>
     </div>
 
+    <CompleteButton nextButtonText="購入手続きへ進む" link="/cartDeliveryAddress"/>
+
+
   </div>
+  <FooterComp />
 </template>
 
 <style scoped>

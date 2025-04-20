@@ -9,7 +9,7 @@
 
 <style>
 html {
-	/* font-family: "Permanent Marker", cursive; */
+  font-size: 65%;
 }
 header, footer{
   background: rgb(130, 128, 128);
@@ -19,4 +19,19 @@ footer {
   text-align: center;
 }
 
+/* 全画面共通 */
+#sysMain {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.inputBtn {
+  background-color: #fff;
+  border: 1px solid gray;
+  border-radius: 5px;
+  margin: 10px;
+  padding: 10px;
+  text-align: center;
+  margin: 20px 10px;
+}
 </style>

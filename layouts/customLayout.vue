@@ -9,9 +9,6 @@
 </template>
 
 <style>
-html {
-	/* font-family: "Permanent Marker", cursive; */
-}
 header {
   background: #000;
   color: #fff;

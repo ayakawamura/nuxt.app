@@ -16,14 +16,12 @@
   </NuxtLayout> -->
 
   <NuxtLayout>
-    <div>
-        counter is:{{ counter }}
-        <button @click="updateCounter(1)">+1</button>
-      </div>
+    <!-- <div>
+      counter is:{{ counter }}
+      <button @click="updateCounter(1)">+1</button>
+    </div> -->
 
-    <HeaderComp />
     <NuxtPage />
-    <FooterComp />
   </NuxtLayout>
 
   <!-- <NuxtLayout>

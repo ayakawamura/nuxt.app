@@ -9,6 +9,14 @@ const handleTextInput = (event: Event) => {
 
     emit('update:remark', text)
 }
+
+// ページ遷移時のAPI実行
+const saveApi = () => {
+  // ここでAPI実行
+  console.log('備考保存')
+}
+defineExpose({ saveApi })
+
 </script>
 
 <template>

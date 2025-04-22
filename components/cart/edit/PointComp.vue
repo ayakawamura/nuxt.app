@@ -33,6 +33,13 @@ const handleUsePointInput = (event: Event) => {
   emit('update:usePoint', inputValue)
   emit('update:selected', 1)
 }
+
+// ページ遷移時のAPI実行
+const saveApi = () => {
+  // ここでAPI実行
+  console.log('ポイント保存')
+}
+defineExpose({ saveApi })
 </script>
 
 <template>

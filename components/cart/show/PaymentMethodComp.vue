@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+// import {ref} from 'vue'
 import EditButton from '~/components/parts/EditButton.vue';
 import { getPaymentMethod } from '~/composables/cart/getApi'
+import { useSelectPayMethodId } from '~/composables/cart/useSelectPayMethodId'
 
-const selectPayMethodId = ref<number>(1)
+
+const selectPayMethodId = useSelectPayMethodId()
 const paymentMethod = getPaymentMethod()
 
 const selectPaymentMethod = paymentMethod.filter((payMethod) => payMethod.id == selectPayMethodId.value)

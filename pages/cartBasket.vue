@@ -2,13 +2,18 @@
 // import { ref, computed } from 'vue'
 import CartTable from '~/components/cart/CartTable.vue'
 import CompleteButton from '~/components/parts/CompleteButton.vue';
+import HeaderParts from '~/components/parts/HeaderParts.vue'
 
-
+// 外部CSS読み込み
 useHead({
   link: [
     {
       rel: 'stylesheet',
-      href: 'https://kawamura-test.aispr.jp/css/user.css?cacheKey=1699948908'
+      href: 'https://kawamura-test.aispr.jp/css/user.css'
+    },
+    {
+      rel: 'stylesheet',
+      href: 'https://kawamura-test.aispr.jp/css/parts.css?cacheKey=1745227843'
     }
   ],
 })
@@ -26,10 +31,14 @@ onMounted(async () => {
     document.head.appendChild(script)
   }
 })
+
 </script>
 
 <template>
   <HeaderComp />
+
+  <!-- 機能パーツ -->
+  <HeaderParts />
 
   <div id="cart-container">
     <h1 class="cart-title">バスケット</h1>

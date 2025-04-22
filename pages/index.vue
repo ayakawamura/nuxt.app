@@ -4,11 +4,15 @@
     <hr>
 
     <NuxtLink to="/about">
-      料金ぺーじ
+      about
     </NuxtLink>
     <br>
     <NuxtLink to="https://www.google.co.jp/">
       google
+    </NuxtLink>
+    <br>
+    <NuxtLink to ="/cartBasket">
+      バスケットページ
     </NuxtLink>
   </div>
 </template>

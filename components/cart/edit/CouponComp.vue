@@ -20,6 +20,12 @@ const handleChange = (id: number, event: Event) => {
   }
 }
 
+// ページ遷移時のAPI実行
+const saveApi = () => {
+  // ここでAPI実行
+  console.log('クーポン保存')
+}
+defineExpose({ saveApi })
 </script>
 
 <template>

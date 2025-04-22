@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import CompleteButton from '~/components/parts/CompleteButton.vue';
+import DeliveryListPanelComp from '~/components/cart/edit/DeliveryListPanelComp.vue';
 import BackButton from '~/components/parts/BackButton.vue';
 import type { Customer, DeliveryAddress } from '~/types/cart';
 import {getCustomer} from '~/composables/cart/getApi'
@@ -33,6 +34,14 @@ const sendForClient = () => {
       price: 0,
       count: 0,
     }]
+  }
+}
+
+// お届け先リストオープン
+const openAddressList = () => {
+  const target = document.querySelector('.overlay-background');
+  if (target) {
+    target.classList.add('active');
   }
 }
 
@@ -104,7 +113,7 @@ const sendForClient = () => {
       <div class="deliveryAddressInput" v-show="!isDeliverySet">
         <div>
           <button class="inputBtn" @click="sendForClient">ご注文者に送る</button>
-          <button class="inputBtn">お届け先リストから選ぶ</button>
+          <button class="inputBtn" @click="openAddressList">お届け先リストから選ぶ</button>
         </div>
         <div>
           <label>お名前</label><br>
@@ -138,11 +147,17 @@ const sendForClient = () => {
 
       <CompleteButton nextButtonText="お届け先を決定する" link="/cartDeliveryMethod" />
       <BackButton link="/cartBasket" />
+
+
+      <!-- お届け先リスト -->
+       <DeliveryListPanelComp />
+
+
     </div>
   </div>
 </template>
 
-<style scoped>
+<style>
 /* 配送先入力画面CSS */
 .client_info {
   background: #f6f6f6;
@@ -180,12 +195,6 @@ span.item-name {
   display: flex;
   flex-wrap: wrap;
 }
-
-
-
-
-
-
 
 s div#sysWrap {
   overflow: visible !important;

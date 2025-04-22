@@ -21,7 +21,7 @@ import EditButton from '~/components/parts/EditButton.vue';
       <div id="summury">
         <SummaryComp />
         <CompleteButton nextButtonText="注文を確定する" link=""/>
-        <EditButton text="買い物かごに戻る" link=""/>
+        <EditButton text="買い物かごに戻る" link="/cartBasket"/>
       </div>
 
       <!-- 一覧 -->

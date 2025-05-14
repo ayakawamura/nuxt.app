@@ -10,4 +10,26 @@ export default defineNuxtConfig({
   ],
   // 全体に適用するcss
   css: ['~/assets/css/reset.css'],
+
+  // lambdaデプロイ用設定 nitroはサーバーエンジン
+  nitro: {
+    preset: 'aws-lambda',
+    serveStatic: true,
+  },
+
+  app: {
+    baseURL: '/',
+  },
+
+  ssr: true,  // SSR（サーバーサイドレンダリング）を有効化
+
+  // laravelAPIのエンドポイント指定
+  runtimeConfig: {
+    public: {
+      apiBase: 'https://api.rep-aispr.xyz',
+    },
+    apiBase: 'https://api.rep-aispr.xyz',
+    apiKey: '',
+  }
+
 })

@@ -13,7 +13,7 @@ useHead({
     },
     {
       rel: 'stylesheet',
-      href: 'https://kawamura-test.aispr.jp/css/parts.css?cacheKey=1745227843'
+      href: 'https://kawamura-test.aispr.jp/css/parts.css'
     }
   ],
 })
@@ -24,9 +24,9 @@ onMounted(async () => {
   await nextTick()
 
   // すでに読み込まれてたらスキップ
-  if (!document.querySelector('script[src="https://kawamura-test.aispr.jp/js/userAfterLoading.js"]')) {
+  if (!document.querySelector('script[src="https://kawamura-test.aispr.jp/js/user.js"]')) {
     const script = document.createElement('script')
-    script.src = 'https://kawamura-test.aispr.jp/js/userAfterLoading.js'
+    script.src = 'https://kawamura-test.aispr.jp/js/user.js'
     script.defer = true
     document.head.appendChild(script)
   }
@@ -71,7 +71,7 @@ onMounted(async () => {
     </table>
 
     <div class="cart-total">
-      合計: <strong>1000円</strong>
+      合計: <strong>1,000円</strong>
     </div>
 
     <CompleteButton nextButtonText="購入手続きへ進む" link="/cartDeliveryAddress"/>

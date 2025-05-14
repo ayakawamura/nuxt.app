@@ -50,6 +50,11 @@ const handleNext = () => {
 
 <template>
   <div id="sysMain">
+
+    <div class="itemImage">
+      <img class="opcItem_itemImage" src="/cat.jpg" title="画像をクリックして詳細ページへ" alt="りんご">
+    </div>
+
     <!-- お支払い方法選択 -->
     <PaymentMethodComp :paymentMethodList="paymentMethodList"
       :selected="selectPayMethodId"
@@ -78,6 +83,9 @@ const handleNext = () => {
   </div>
 </template>
 
-<style scoped>
-
+<style>
+.itemImage img{
+  height: 200px;
+  width: auto;
+}
 </style>

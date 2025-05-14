@@ -44,7 +44,7 @@ const handleChange = (event: Event) => {
         </summary>
         <div class="item-image">
           <div>
-            <img class="opcItem_itemImage" src="/character_apple.png" title="画像をクリックして詳細ページへ" alt="十二単「満開」(お米2合×12個)">
+            <img class="opcItem_itemImage" src="/cat.jpg" title="画像をクリックして詳細ページへ" alt="十二単「満開」(お米2合×12個)">
             <span class="item-name">十二単「満開」(お米2合×12個)</span>
           </div>
         </div>

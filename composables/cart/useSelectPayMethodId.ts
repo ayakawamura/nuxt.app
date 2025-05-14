@@ -8,7 +8,7 @@
 // useCookieを使用する場合
 export const useSelectPayMethodId = () => {
   const cookie = useCookie<number>('selectPayMethodId', {
-    default: () => null,
+    default: () => 0,
     maxAge: 60 * 60 * 24, // 1日保存（必要に応じて調整してOK）
   })
 

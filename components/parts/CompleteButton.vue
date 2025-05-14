@@ -1,7 +1,7 @@
 <script setup lang="ts">
 
 interface Props {
-  nextButtonText : string,
+  nextButtonText: string,
   link: string,
 }
 
@@ -21,7 +21,7 @@ const props = defineProps<Props>();
 </template>
 
 
-<style>
+<style scoped>
 .complete {
   background-color: #f86150;
   border: none;

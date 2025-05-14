@@ -4,7 +4,6 @@ import { getRemarks } from '~/composables/cart/getApi'
 
 const remarks = getRemarks()
 
-
 </script>
 
 <template>

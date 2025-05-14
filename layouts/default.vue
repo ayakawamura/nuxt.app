@@ -1,3 +1,6 @@
+<script setup >
+</script>
+
 <template>
   <div>
     <header>デフォルトレイアウト</header>
@@ -11,10 +14,13 @@
 html {
   font-size: 65%;
 }
-header, footer{
+
+header,
+footer {
   background: rgb(130, 128, 128);
   color: #fff;
 }
+
 footer {
   text-align: center;
 }

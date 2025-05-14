@@ -1,11 +1,25 @@
+
 export default defineEventHandler(async () => {
-  const res = await fetch('https://api.rep-aispr.xyz/customers', {
+  const config = useRuntimeConfig()
+
+  const res = await fetch(`${config.apiBase}/customers`, {
     headers: {
       'Content-Type': 'application/json',
-      'X-API-Key': 'f4ba2047-c8f8-4d8e-9023-5b241dae2a23',
+      'X-API-Key': config.apiKey,
       'X-Version': '1.0',
+      // 'X-API-Key': '',
+      // 'X-Version': '1.0',
     }
   });
+
+  if (!res.ok) {
+    const text = await res.text()
+    console.error('Laravel API Error:', res.status, text)
+    throw createError({
+      statusCode: res.status,
+      statusMessage: 'Laravel API error',
+    })
+  }
 
   return await res.json(); // そのままフロントに返す
 });

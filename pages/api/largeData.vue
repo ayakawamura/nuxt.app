@@ -1,73 +1,52 @@
-<script setup lang="ts">
-import { ref } from 'vue';
-import CompleteButton from '~/components/parts/CompleteButton.vue';
-import DeliveryListPanelComp from '~/components/cart/edit/DeliveryListPanelComp.vue';
-import BackButton from '~/components/parts/BackButton.vue';
-import type { Customer, DeliveryAddress } from '~/types/cart';
-import {getCustomer} from '~/composables/cart/getApi'
+<script setup>
+import CouponApiComp from '~/components/CouponApiComp.vue'
+import BackButton from '~/components/parts/BackButton.vue'
+import AddressPanelApiComp from '~/components/AddressPanelApiComp.vue';
 
+// 選択済お届け先
+const deliveryAddress = ref(null)
+const isDeliverySet = ref(false);
 
-const client = ref<Customer>(getCustomer())
-
-const deliveryAddress = ref<DeliveryAddress | null>(null)
-const isDeliverySet = ref<boolean>(false);
-
+// 注文者に送る
 const sendForClient = () => {
   isDeliverySet.value = true;
-
   deliveryAddress.value = {
     id: 1,
-    name: client.value.name,
-    kana: client.value.kana,
-    postalCode: client.value.postalCode,
-    address: client.value.address,
-    phone: client.value.phone,
-    deliveryMethod: {
-      name: null,
-      hopeDate: null,
-      hopeTime:null,
-    },
-    item: [{
-      id: 0,
-      name: '',
-      url: '',
-      price: 0,
-      count: 0,
-    }]
+    name: '山田 太郎',
+    postalCode: '100-0001',
+    address: '東京都千代田区千代田1-1',
   }
 }
 
 // お届け先リストオープン
 const openAddressList = () => {
+  performance.mark('start-openAddressList');
+
   const target = document.querySelector('.overlay-background');
   if (target) {
     target.classList.add('active');
   }
+
+  // 次の描画タイミングで処理終了をマーク
+  requestAnimationFrame(() => {
+    performance.mark('end-openAddressList');
+    performance.measure(
+      'openAddressList (including paint)',
+      'start-openAddressList',
+      'end-openAddressList'
+    );
+
+    const measures = performance.getEntriesByName('openAddressList (including paint)');
+    console.log('JS + 描画までの時間:', measures[0].duration.toFixed(2), 'ms');
+  });
 }
+
 
 </script>
 
 <template>
   <div id="sysMain">
-    <h1>お届け先の指定</h1><hr>
-
-    <!-- 依頼主 -->
-    <div class="client_info">
-      <div class="font-weight-bold irainushichange">
-        <span>ご依頼主</span>
-        <a href="">変更</a>
-      </div>
-      <hr>
-
-      <div>
-        <div>
-          <span>{{ client.name }}</span>
-        </div>
-        <div>
-          {{ client.postalCode }} {{ client.address }}
-        </div>
-      </div>
-    </div>
+    <BackButton link="/" />
 
     <!-- お届け先 -->
     <div class="deliveryAddress">
@@ -91,8 +70,7 @@ const openAddressList = () => {
             <summary><span class="shipItems">お届け商品</span></summary>
             <div class="item-image">
               <div>
-                <img class="opcItem_itemImage" src="/cat.jpg" title="画像をクリックして詳細ページへ"
-                  alt="りんご">
+                <img class="opcItem_itemImage" src="/cat.jpg" title="画像をクリックして詳細ページへ" alt="りんご">
                 <span class="item-name">
                   <span class="name">りんご</span><br>
                   <span class="price">商品単価：16,500円（税込）</span><br>
@@ -108,52 +86,23 @@ const openAddressList = () => {
         </div>
       </div>
 
-
-
       <div class="deliveryAddressInput" v-show="!isDeliverySet">
         <div>
           <button class="inputBtn" @click="sendForClient">ご注文者に送る</button>
           <button class="inputBtn" @click="openAddressList">お届け先リストから選ぶ</button>
         </div>
-        <div>
-          <label>お名前</label><br>
-          <input type="text">
-        </div>
-        <div>
-          <label>フリガナ</label><br>
-          <input type="text">
-        </div>
-        <div>
-          <label>郵便番号</label><br>
-          <input type="text">
-        </div>
-        <div>
-          <label>都道府県</label><br>
-          <input type="text">
-        </div>
-        <div>
-          <label>群市区</label><br>
-          <input type="text">
-        </div>
-        <div>
-          <label>それ以降の住所</label><br>
-          <input type="text">
-        </div>
-        <div>
-          <label>電話番号</label><br>
-          <input type="text">
-        </div>
       </div>
 
-      <CompleteButton nextButtonText="お届け先を決定する" link="/cartDeliveryMethod" />
-      <BackButton link="/cartBasket" />
-
-
       <!-- お届け先リスト -->
-      <DeliveryListPanelComp />
+      <AddressPanelApiComp />
 
 
     </div>
+
+    <!-- クーポン設定 -->
+    <CouponApiComp apiLink="large"/>
+
+
   </div>
 </template>
 
@@ -219,8 +168,6 @@ s div#sysWrap {
 
 .opcCommonButton {
   font-size: 1.4rem;
-  /* background: #1f1f1f !important;
-      color: #fff !important; */
   display: inline-block;
   border: 1px solid #999;
 }
@@ -258,7 +205,6 @@ s div#sysWrap {
   top: 0;
   z-index: 1;
   background: #f6f6f6;
-  /* padding-bottom: 5px; */
   padding: 10px 10px 10px 0px;
 }
 
@@ -273,7 +219,6 @@ s div#sysWrap {
   text-decoration: underline;
   display: inline-block;
   margin: 0 3px;
-  /* color: red; */
   font-size: 1.4rem;
 }
 
@@ -333,9 +278,6 @@ span.icon.setting {
   border-radius: 25px;
 }
 
-div#checkout-main {
-  /* padding: 0 10px; */
-}
 
 span.deliveryAddress {
   font-size: 1.4rem;
@@ -464,11 +406,6 @@ input.style-checkbox-input {
   font-size: 1.7rem;
   font-weight: 700;
 }
-
-.col.col-12.col-md-7 {
-  /* display: flex; */
-}
-
 .address-tab-index.row.justify-content-center.tny-text-gray.my-3.my-md-2.pt-1 {
   display: flex;
   justify-content: flex-start;
@@ -591,10 +528,8 @@ input.addressSearchWord {
   position: sticky;
   top: 0;
   background: #fff;
-  /* margin-top: 30px; */
   padding: 10px 0;
   font-size: 1.4rem;
-  /* border-bottom: 1px solid #eee; */
   z-index: 9;
 }
 
@@ -606,54 +541,4 @@ input.addressSearchWord {
   text-align: center;
 }
 
-@media only screen and (max-width: 760px) {
-  .opcDeliveryAddress_openDialogButtonGroup_edit {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 40px;
-  }
-
-  input.opcDeliveryAddress_synchronizeBillingAddressButton_edit.opcCommonButton {
-    margin-right: 0px;
-    display: inline-block;
-  }
-
-  .operationButtons {
-    display: flex;
-    align-items: flex-end;
-    justify-content: space-around;
-    flex-direction: row-reverse;
-    flex-wrap: wrap;
-  }
-
-  .nextSteps {
-    flex-basis: 100%;
-  }
-
-  .row.mx-0 {
-    display: flex;
-    align-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .col-1,
-  .col-2 {
-    padding: 6px;
-    border-right: 1px solid #ccc;
-    margin-bottom: 10px;
-  }
-
-  .address-tab-label.col.col-12.col-md-2.bg-dark.text-white.rounded-top.d-md-flex.align-items-center.justify-content-center {
-    margin-right: 10px;
-    background: #eee;
-    color: black;
-    padding: 10px;
-    border-radius: 0;
-    width: 100%;
-  }
-
-  input.addressSearchWord {
-    width: 90% !important;
-  }
-}
 </style>

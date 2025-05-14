@@ -1,0 +1,362 @@
+{
+  "/Users/kawamura/Desktop/develop/study/nuxt-app/serverless.yml": {
+    "versionFramework": "4.14.3",
+    "servicePath": "/Users/kawamura/Desktop/develop/study/nuxt-app/serverless.yml",
+    "serviceConfigFileName": "serverless.yml",
+    "service": {
+      "service": "nuxt-app",
+      "frameworkVersion": "4",
+      "provider": {
+        "name": "aws",
+        "runtime": "nodejs20.x",
+        "region": "ap-northeast-1",
+        "profile": "rep",
+        "stage": "dev",
+        "versionFunctions": true,
+        "compiledCloudFormationTemplate": {
+          "AWSTemplateFormatVersion": "2010-09-09",
+          "Description": "The AWS CloudFormation template for this Serverless application",
+          "Resources": {
+            "NuxtSsrCoreLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/nuxt-app-dev-NuxtSsrCore"
+              }
+            },
+            "NuxtLogGroup": {
+              "Type": "AWS::Logs::LogGroup",
+              "Properties": {
+                "LogGroupName": "/aws/lambda/nuxt-app-dev-nuxt"
+              }
+            },
+            "IamRoleLambdaExecution": {
+              "Type": "AWS::IAM::Role",
+              "Properties": {
+                "AssumeRolePolicyDocument": {
+                  "Version": "2012-10-17",
+                  "Statement": [
+                    {
+                      "Effect": "Allow",
+                      "Principal": {
+                        "Service": [
+                          "lambda.amazonaws.com"
+                        ]
+                      },
+                      "Action": [
+                        "sts:AssumeRole"
+                      ]
+                    }
+                  ]
+                },
+                "Policies": [
+                  {
+                    "PolicyName": {
+                      "Fn::Join": [
+                        "-",
+                        [
+                          "nuxt-app",
+                          "dev",
+                          "lambda"
+                        ]
+                      ]
+                    },
+                    "PolicyDocument": {
+                      "Version": "2012-10-17",
+                      "Statement": [
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:CreateLogStream",
+                            "logs:CreateLogGroup",
+                            "logs:TagResource"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nuxt-app-dev*:*"
+                            }
+                          ]
+                        },
+                        {
+                          "Effect": "Allow",
+                          "Action": [
+                            "logs:PutLogEvents"
+                          ],
+                          "Resource": [
+                            {
+                              "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nuxt-app-dev*:*:*"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  }
+                ],
+                "Path": "/",
+                "RoleName": {
+                  "Fn::Join": [
+                    "-",
+                    [
+                      "nuxt-app",
+                      "dev",
+                      {
+                        "Ref": "AWS::Region"
+                      },
+                      "lambdaRole"
+                    ]
+                  ]
+                }
+              }
+            },
+            "NuxtSsrCoreLambdaFunction": {
+              "Type": "AWS::Lambda::Function",
+              "Properties": {
+                "Code": {
+                  "S3Bucket": "serverless-framework-deployments-ap-northeast-1-f3a8704f-bb70",
+                  "S3Key": "serverless/nuxt-app/dev/1747012143596-2025-05-12T01:09:03.596Z/NuxtSsrCore.zip"
+                },
+                "Handler": ".output/server/index.handler",
+                "Runtime": "nodejs20.x",
+                "FunctionName": "nuxt-app-dev-NuxtSsrCore",
+                "MemorySize": 1024,
+                "Timeout": 6,
+                "Role": {
+                  "Fn::GetAtt": [
+                    "IamRoleLambdaExecution",
+                    "Arn"
+                  ]
+                }
+              },
+              "DependsOn": [
+                "NuxtSsrCoreLogGroup"
+              ]
+            }
+          },
+          "Outputs": {
+            "ServerlessDeploymentBucketName": {
+              "Value": "serverless-framework-deployments-ap-northeast-1-f3a8704f-bb70"
+            }
+          }
+        },
+        "vpc": {}
+      },
+      "package": {
+        "patterns": [
+          "!**/**",
+          ".output/**"
+        ],
+        "excludeDevDependencies": true,
+        "individually": true,
+        "artifactsS3KeyDirname": "serverless/nuxt-app/dev/code-artifacts",
+        "deploymentBucket": "serverless-framework-deployments-ap-northeast-1-f3a8704f-bb70",
+        "artifactDirectoryName": "serverless/nuxt-app/dev/1747012143596-2025-05-12T01:09:03.596Z"
+      },
+      "functions": {
+        "NuxtSsrCore": {
+          "handler": ".output/server/index.handler",
+          "url": true,
+          "events": [],
+          "name": "nuxt-app-dev-NuxtSsrCore",
+          "package": {
+            "artifact": ".serverless/NuxtSsrCore.zip"
+          },
+          "memory": 1024,
+          "timeout": 6,
+          "runtime": "nodejs20.x",
+          "vpc": {}
+        },
+        "nuxt": {
+          "timeout": 30,
+          "memorySize": 2048,
+          "events": [],
+          "name": "nuxt-app-dev-nuxt",
+          "package": {
+            "artifact": ".serverless/nuxt.zip"
+          }
+        }
+      }
+    },
+    "provider": {
+      "name": "aws",
+      "runtime": "nodejs20.x",
+      "region": "ap-northeast-1",
+      "profile": "rep",
+      "stage": "dev",
+      "versionFunctions": true,
+      "compiledCloudFormationTemplate": {
+        "AWSTemplateFormatVersion": "2010-09-09",
+        "Description": "The AWS CloudFormation template for this Serverless application",
+        "Resources": {
+          "NuxtSsrCoreLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/nuxt-app-dev-NuxtSsrCore"
+            }
+          },
+          "NuxtLogGroup": {
+            "Type": "AWS::Logs::LogGroup",
+            "Properties": {
+              "LogGroupName": "/aws/lambda/nuxt-app-dev-nuxt"
+            }
+          },
+          "IamRoleLambdaExecution": {
+            "Type": "AWS::IAM::Role",
+            "Properties": {
+              "AssumeRolePolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [
+                  {
+                    "Effect": "Allow",
+                    "Principal": {
+                      "Service": [
+                        "lambda.amazonaws.com"
+                      ]
+                    },
+                    "Action": [
+                      "sts:AssumeRole"
+                    ]
+                  }
+                ]
+              },
+              "Policies": [
+                {
+                  "PolicyName": {
+                    "Fn::Join": [
+                      "-",
+                      [
+                        "nuxt-app",
+                        "dev",
+                        "lambda"
+                      ]
+                    ]
+                  },
+                  "PolicyDocument": {
+                    "Version": "2012-10-17",
+                    "Statement": [
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:CreateLogStream",
+                          "logs:CreateLogGroup",
+                          "logs:TagResource"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nuxt-app-dev*:*"
+                          }
+                        ]
+                      },
+                      {
+                        "Effect": "Allow",
+                        "Action": [
+                          "logs:PutLogEvents"
+                        ],
+                        "Resource": [
+                          {
+                            "Fn::Sub": "arn:${AWS::Partition}:logs:${AWS::Region}:${AWS::AccountId}:log-group:/aws/lambda/nuxt-app-dev*:*:*"
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                }
+              ],
+              "Path": "/",
+              "RoleName": {
+                "Fn::Join": [
+                  "-",
+                  [
+                    "nuxt-app",
+                    "dev",
+                    {
+                      "Ref": "AWS::Region"
+                    },
+                    "lambdaRole"
+                  ]
+                ]
+              }
+            }
+          },
+          "NuxtSsrCoreLambdaFunction": {
+            "Type": "AWS::Lambda::Function",
+            "Properties": {
+              "Code": {
+                "S3Bucket": "serverless-framework-deployments-ap-northeast-1-f3a8704f-bb70",
+                "S3Key": "serverless/nuxt-app/dev/1747012143596-2025-05-12T01:09:03.596Z/NuxtSsrCore.zip"
+              },
+              "Handler": ".output/server/index.handler",
+              "Runtime": "nodejs20.x",
+              "FunctionName": "nuxt-app-dev-NuxtSsrCore",
+              "MemorySize": 1024,
+              "Timeout": 6,
+              "Role": {
+                "Fn::GetAtt": [
+                  "IamRoleLambdaExecution",
+                  "Arn"
+                ]
+              }
+            },
+            "DependsOn": [
+              "NuxtSsrCoreLogGroup"
+            ]
+          }
+        },
+        "Outputs": {
+          "ServerlessDeploymentBucketName": {
+            "Value": "serverless-framework-deployments-ap-northeast-1-f3a8704f-bb70"
+          }
+        }
+      },
+      "vpc": {}
+    },
+    "dashboard": {
+      "isEnabledForService": false,
+      "requiredAuthentication": false,
+      "orgFeaturesInUse": null,
+      "orgObservabilityIntegrations": null,
+      "serviceAppId": null,
+      "serviceProvider": null,
+      "instanceParameters": null
+    },
+    "error": {
+      "message": "Either \"handler\" or \"image\" property needs to be set on function \"nuxt\"",
+      "stack": "ServerlessError2: Either \"handler\" or \"image\" property needs to be set on function \"nuxt\"\n    at AwsCompileFunctions.compileFunction (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1060:45082)\n    at file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1060:65604\n    at Array.map (<anonymous>)\n    at AwsCompileFunctions.compileFunctions (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1060:65581)\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async PluginManager.runHooks (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1241:9549)\n    at async PluginManager.invoke (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1241:10318)\n    at async PluginManager.spawn (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1241:10677)\n    at async before:deploy:deploy (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1015:38774)\n    at async PluginManager.runHooks (file:///Users/kawamura/.serverless/releases/4.14.3/package/dist/sf-core.js:1241:9549)",
+      "code": "FUNCTION_NEITHER_HANDLER_NOR_IMAGE_DEFINED_ERROR"
+    },
+    "serviceRawFile": "service: nuxt-app # サービス名 (任意)\n\nframeworkVersion: '4'\n\nprovider:\n  name: aws\n  runtime: nodejs20.x # Lambda の実行環境\n  region: ap-northeast-1 # デプロイ先の AWS リージョン (東京リージョン)\n  # environment: # API 連携はまだ行わないため、このセクションは不要\n  #   API_BASE_URL: ${env:API_BASE_URL} # Laravel アプリの API ベース URL を環境変数で設定\n  profile: rep\n\npackage:\n  patterns:\n    - \"!**/**\"\n    - \".output/**\"\n    # .output/server/**と.output/publicを読み込みたい\n  excludeDevDependencies: true\n  individually: true\n\nfunctions:\n  NuxtSsrCore:\n    handler: '.output/server/index.handler'\n    url: true # Lambda の関数URLを作成\n  nuxt:\n    timeout: 30  # 秒（最大値）\n    memorySize: 2048\n",
+    "command": [
+      "deploy"
+    ],
+    "options": {
+      "verbose": true
+    },
+    "orgId": "be66730e-cf25-4520-b1b3-28483460230a",
+    "orgName": "rockwave",
+    "userId": "zYl6SSck63RpW23f9p",
+    "userName": "rockwave",
+    "serviceProviderAwsAccountId": "062891150991",
+    "serviceProviderAwsCfStackName": "nuxt-app-dev",
+    "serviceProviderAwsCfStackId": "arn:aws:cloudformation:ap-northeast-1:062891150991:stack/nuxt-app-dev/5b8e2880-2024-11f0-b0a7-0a6478126d11",
+    "serviceProviderAwsCfStackCreated": "2025-04-23T09:21:38.207Z",
+    "serviceProviderAwsCfStackUpdated": "2025-05-11T05:35:19.656Z",
+    "serviceProviderAwsCfStackStatus": "UPDATE_COMPLETE",
+    "serviceProviderAwsCfStackOutputs": [
+      {
+        "OutputKey": "NuxtSsrCoreLambdaFunctionUrl",
+        "OutputValue": "https://kakfhow2jybnok5rohjmkdv4fq0vmcni.lambda-url.ap-northeast-1.on.aws/",
+        "Description": "Lambda Function URL",
+        "ExportName": "sls-nuxt-app-dev-NuxtSsrCoreLambdaFunctionUrl"
+      },
+      {
+        "OutputKey": "NuxtSsrCoreLambdaFunctionQualifiedArn",
+        "OutputValue": "arn:aws:lambda:ap-northeast-1:062891150991:function:nuxt-app-dev-NuxtSsrCore:19",
+        "Description": "Current Lambda function version",
+        "ExportName": "sls-nuxt-app-dev-NuxtSsrCoreLambdaFunctionQualifiedArn"
+      },
+      {
+        "OutputKey": "ServerlessDeploymentBucketName",
+        "OutputValue": "serverless-framework-deployments-ap-northeast-1-f3a8704f-bb70",
+        "ExportName": "sls-nuxt-app-dev-ServerlessDeploymentBucketName"
+      }
+    ]
+  }
+}

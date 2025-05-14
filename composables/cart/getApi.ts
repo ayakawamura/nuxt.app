@@ -31,7 +31,7 @@ export const getDeliveryAddressList = () => {
       item: [{
         id: 1,
         name: '赤りんご',
-        url: '/character_apple.png',
+        url: '/cat.jpg',
         price: 1000,
         count: 13,
       }]
@@ -51,7 +51,7 @@ export const getDeliveryAddressList = () => {
       item: [{
         id: 0,
         name: '青りんご',
-        url: '/character_apple.png',
+        url: '/cat.jpg',
         price: 500,
         count: 7,
       }],

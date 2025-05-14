@@ -17,7 +17,7 @@ const props = defineProps<Props>();
 </template>
 
 
-<style>
+<style scoped>
 .back {
   background-color: #FFF;
   border: 1px solid gray;

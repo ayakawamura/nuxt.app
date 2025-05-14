@@ -18,7 +18,7 @@ const props = defineProps<Props>();
 </template>
 
 
-<style>
+<style scoped>
 .edit {
   background-color: #FFF;
   border: 1px solid gray;

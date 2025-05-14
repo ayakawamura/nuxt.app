@@ -1,0 +1,27 @@
+service: nuxt-app # サービス名 (任意)
+
+frameworkVersion: '4'
+
+provider:
+  name: aws
+  runtime: nodejs20.x # Lambda の実行環境
+  region: ap-northeast-1 # デプロイ先の AWS リージョン (東京リージョン)
+  # environment: # API 連携はまだ行わないため、このセクションは不要
+  #   API_BASE_URL: ${env:API_BASE_URL} # Laravel アプリの API ベース URL を環境変数で設定
+  profile: rep
+
+package:
+  patterns:
+    - "!**/**"
+    - ".output/**"
+    # .output/server/**と.output/publicを読み込みたい
+  excludeDevDependencies: true
+  individually: true
+
+functions:
+  NuxtSsrCore:
+    handler: '.output/server/index.handler'
+    url: true # Lambda の関数URLを作成
+  nuxt:
+    timeout: 30  # 秒（最大値）
+    memorySize: 2048
